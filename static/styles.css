@@ -1,0 +1,77 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, system-ui, Arial, sans-serif;
+}
+body {
+  margin: 0;
+  background: #f3f4f6;
+  color: #1f2937;
+}
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+.card {
+  background: #fff;
+  border-radius: 0.8rem;
+  padding: 1rem;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+}
+.row {
+  display: flex;
+  gap: 0.5rem;
+}
+input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+}
+button {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+}
+.status {
+  margin: 1rem 0;
+  min-height: 1.5rem;
+}
+.error {
+  color: #b91c1c;
+}
+.success {
+  color: #166534;
+}
+.results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.media-card {
+  background: #fff;
+  border-radius: 0.8rem;
+  padding: 0.7rem;
+}
+.media-card img,
+.media-card video {
+  width: 100%;
+  border-radius: 0.6rem;
+  max-height: 320px;
+  object-fit: cover;
+}
+.hint {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+@media (max-width: 640px) {
+  .row {
+    flex-direction: column;
+  }
+  button {
+    width: 100%;
+  }
+}
