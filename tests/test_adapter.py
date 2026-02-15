@@ -1,6 +1,10 @@
 import pytest
 
-from instagram_adapter import InstagramAdapterError, _extract_media_urls, normalize_instagram_url
+from instagram_adapter import (
+    InstagramAdapterError,
+    _extract_media_urls,  # exercise fallback extraction internals
+    normalize_instagram_url,
+)
 
 
 def test_normalize_standard_url():

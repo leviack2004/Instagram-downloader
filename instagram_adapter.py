@@ -143,7 +143,7 @@ def resolve_instagram_media(normalized_url: str) -> MediaResult:
     request = Request(normalized_url, headers={"User-Agent": "Mozilla/5.0"})
     try:
         with urlopen(request, timeout=8) as response:
-            html = response.read().decode("utf-8", errors="ignore")
+            page_html = response.read().decode("utf-8", errors="ignore")
     except HTTPError as exc:
         if exc.code == 429:
             raise InstagramAdapterError(
@@ -169,7 +169,7 @@ def resolve_instagram_media(normalized_url: str) -> MediaResult:
             "Please try again in a few moments.",
         ) from exc
 
-    items = _extract_media_urls(html)
+    items = _extract_media_urls(page_html)
     if not items:
         raise InstagramAdapterError(
             "unsupported_content",
