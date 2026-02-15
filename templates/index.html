@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instagram Downloader</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Instagram Downloader</h1>
+      <p class="subhead">Paste a public Instagram post, reel, or TV link to preview and download.</p>
+
+      <form id="resolver-form" class="card" novalidate>
+        <label for="url">Instagram URL</label>
+        <div class="row">
+          <input id="url" name="url" type="url" placeholder="https://www.instagram.com/p/..." required />
+          <button id="submit-btn" type="submit">Download</button>
+        </div>
+        <p id="validation" class="hint" aria-live="polite"></p>
+      </form>
+
+      <section id="status" class="status" aria-live="polite"></section>
+      <section id="results" class="results"></section>
+
+      <section class="legal card">
+        <h2>Responsible use</h2>
+        <p>Only download content you own or are authorized to use.</p>
+        <p>This tool is not affiliated with Instagram. Use may be subject to Instagram's terms and copyright laws.</p>
+        <p>Media is processed transiently and is not stored permanently by this service.</p>
+      </section>
+    </main>
+
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>
