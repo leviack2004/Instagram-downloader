@@ -86,8 +86,8 @@ def normalize_instagram_url(raw_url: str) -> str:
     return f"https://www.instagram.com/{path_parts[0]}/{shortcode}/{suffix}"
 
 
-def _extract_media_urls(html: str) -> list[MediaItem]:
-    decoded_html = html_unescape_unicode(html).replace("\\/", "/")
+def _extract_media_urls(page_html: str) -> list[MediaItem]:
+    decoded_html = html_unescape_unicode(page_html).replace("\\/", "/")
 
     videos = _unique(
         re.findall(r'"video_url":"(https?://[^\"]+)"', decoded_html)
@@ -146,16 +146,36 @@ def resolve_instagram_media(normalized_url: str) -> MediaResult:
             html = response.read().decode("utf-8", errors="ignore")
     except HTTPError as exc:
         if exc.code == 429:
-            raise InstagramAdapterError("upstream_rate_limited", "Instagram rate limited this request.", "Wait briefly and try again.") from exc
+            raise InstagramAdapterError(
+                "upstream_rate_limited",
+                "Instagram rate limited this request.",
+                "Wait briefly and try again.",
+            ) from exc
         if exc.code in (401, 403, 404):
-            raise InstagramAdapterError("private_or_unavailable", "This post is private or unavailable.", "Verify the post is public and the URL is correct.") from exc
-        raise InstagramAdapterError("upstream_failure", "Instagram returned an error.", "Please retry shortly.") from exc
+            raise InstagramAdapterError(
+                "private_or_unavailable",
+                "This post is private or unavailable.",
+                "Verify the post is public and the URL is correct.",
+            ) from exc
+        raise InstagramAdapterError(
+            "upstream_failure",
+            "Instagram returned an error.",
+            "Please retry shortly.",
+        ) from exc
     except URLError as exc:
-        raise InstagramAdapterError("upstream_failure", "Instagram is temporarily unreachable.", "Please try again in a few moments.") from exc
+        raise InstagramAdapterError(
+            "upstream_failure",
+            "Instagram is temporarily unreachable.",
+            "Please try again in a few moments.",
+        ) from exc
 
     items = _extract_media_urls(html)
     if not items:
-        raise InstagramAdapterError("unsupported_content", "Couldn't extract downloadable media from this link.", "Try another public post or reel URL.")
+        raise InstagramAdapterError(
+            "unsupported_content",
+            "Couldn't extract downloadable media from this link.",
+            "Try another public post or reel URL.",
+        )
 
     content_type: Literal["image", "video", "carousel"] = "carousel" if len(items) > 1 else items[0].media_type
     return MediaResult(normalized_url, shortcode, content_type, items)

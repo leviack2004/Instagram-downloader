@@ -45,3 +45,17 @@ def test_extracts_escaped_video_url():
     assert len(items) == 1
     assert items[0].media_type == "video"
     assert items[0].url == "https://video.cdn.example/abc.mp4?x=1&y=2"
+
+
+def test_extracts_video_from_twitter_stream_meta_fallback():
+    page = '''
+    <html><head>
+      <meta name="twitter:player:stream" content="https://video.cdn.example/reel_stream.mp4" />
+    </head></html>
+    '''
+
+    items = _extract_media_urls(page)
+
+    assert len(items) == 1
+    assert items[0].media_type == "video"
+    assert items[0].url == "https://video.cdn.example/reel_stream.mp4"
